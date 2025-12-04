@@ -1,0 +1,23 @@
+[
+  {
+    "id": "timestamp_or_uuid",
+    "name": "Product Name",
+    "sku": "SKU123",
+    "price": 100,
+    "stock": 150
+  },
+  {
+    "id": "1763905442660",
+    "name": "Test-product1",
+    "sku": "product",
+    "price": 100,
+    "stock": 350
+  },
+  {
+    "id": "1763906791559",
+    "name": "test-product2",
+    "sku": "test-product2",
+    "price": 45,
+    "stock": 150
+  }
+]
