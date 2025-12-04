@@ -17,7 +17,7 @@ const authOptions = {
       async authorize(credentials) {
         try {
           // 🔥 Call your login API
-          const { data } = await axios.post(`/api/auth/login`,
+          const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
             {
               username: credentials.username,
               password: credentials.password,
