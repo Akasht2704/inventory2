@@ -464,13 +464,13 @@ export default function DashboardPage() {
       {/* Products Table */}
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[440px] sm:min-w-0">
+          <table className="w-full min-w-[340px] sm:min-w-0">
             <thead className="bg-gray-200">
               <tr>
-                <th className="py-3 px-4 text-left">Name</th>
-                 <th className="py-3 px-4 text-left">Price</th> 
-                <th className="py-3 px-4 text-left">Qty</th>
-                <th className="py-3 px-4 text-center">Actions</th>
+                <th className="py-3 px-3 text-left">Name</th>
+                 <th className="py-3 px-3 text-left">Price</th> 
+                <th className="py-3 px-3 text-left">Qty</th>
+                <th className="py-3 px-3 text-center">Actions</th>
               </tr>
             </thead>
 
@@ -485,11 +485,11 @@ export default function DashboardPage() {
 
               {products.map((p) => (
                 <tr key={p.id} className="border-b">
-                  <td className="py-3 px-4 max-w-xs truncate">{p.name}</td>
-                   <td className="py-3 px-4">₹ {p.price}</td> 
-                  <td className="py-3 px-4">{p.quantity}</td>
+                  <td className="py-3 px-3 max-w-xs truncate">{p.name}</td>
+                   <td className="py-3 px-3">₹ {p.price}</td> 
+                  <td className="py-3 px-3">{p.quantity}</td>
 
-                  <td className="py-3 px-4 text-center relative">
+                  <td className="py-3 px-3 text-center relative">
                     {/* Desktop actions */}
                     <div className="hidden sm:flex justify-center gap-2">
                       <button
