@@ -464,7 +464,7 @@ export default function DashboardPage() {
       {/* Products Table */}
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[505px] sm:min-w-0">
+          <table className="w-full min-w-[440px] sm:min-w-0">
             <thead className="bg-gray-200">
               <tr>
                 <th className="py-3 px-4 text-left">Name</th>
