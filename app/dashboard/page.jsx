@@ -287,6 +287,7 @@ import { useRouter } from "next/navigation";
 import StockModal from "@/components/StockModal";
 import useProducts from "@/utils/useProducts";
 import axios from "axios";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -408,6 +409,7 @@ export default function DashboardPage() {
       {/* Top Bar */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+        <Link href={'/profile'}>Profile</Link>
 
         {/* Desktop Buttons */}
         <div className="hidden sm:flex gap-3">
