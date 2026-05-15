@@ -93,7 +93,7 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <a
                 key={link.name}
-                href={`#${link.href}`}
+                href={`${link.href}`}
                 onClick={() => setOpen(false)}
                 className={`py-2 rounded transition ${
                   active === link.href

@@ -168,7 +168,7 @@ export default function Hero() {
 
         {/* Heading */}
         <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
-          Hey, I'm{" "}
+          Hey, I&apos;m{" "}
           <span className="bg-gradient-to-r from-blue-700 to-purple-700 text-transparent bg-clip-text">
             Utkarsh Tiwari
           </span>

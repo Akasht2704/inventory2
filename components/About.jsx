@@ -35,7 +35,7 @@ export default function About() {
           >
             <div className="bg-gray-800/40 p-8 rounded-2xl border border-gray-700 shadow-xl backdrop-blur">
               <p className="text-lg text-gray-300 leading-relaxed">
-                I'm <span className="text-blue-400 font-semibold">Utkarsh Tiwari</span>, 
+                I&apos;m <span className="text-blue-400 font-semibold">Utkarsh Tiwari</span>, 
                 a passionate full-stack developer who loves building
                 real-world, production-ready digital products.  
                 My focus is creating fast, scalable, and clean web applications using
