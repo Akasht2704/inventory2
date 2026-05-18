@@ -2,8 +2,8 @@ import "./globals.css";
 import Providers from "./Providers";
 
 export const metadata = {
-  title: "Inventory System",
-  description: "Inventory App using Next.js",
+  title: "Akash",
+  description: "Portfolio using Next.js",
 };
 
 export default function RootLayout({ children }) {
