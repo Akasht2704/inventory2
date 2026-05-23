@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getSession, useSession } from "next-auth/react";
+import { PRODUCTS_API, authHeaders } from "@/lib/clientApi";
 
 export default function AddProductPage() {
   const router = useRouter();
@@ -40,18 +41,14 @@ export default function AddProductPage() {
     setLoading(true);
     try {
       await axios.post(
-        "/api/products",
+        PRODUCTS_API,
         {
           name: name.trim(),
           sku: sku.trim(),
           price: Number(price) || 0,
           categoryId: 1,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: authHeaders(token) }
       );
       router.push("/dashboard");
     } catch (err) {

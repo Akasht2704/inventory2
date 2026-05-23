@@ -8,6 +8,7 @@ import EditProductModal from "@/components/EditProductModal";
 import useProducts from "@/utils/useProducts";
 import axios from "axios";
 import Link from "next/link";
+import { PRODUCTS_API, authHeaders } from "@/lib/clientApi";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -30,6 +31,7 @@ export default function DashboardPage() {
 
   const [mobileMenu, setMobileMenu] = useState(false);
   const [openActionId, setOpenActionId] = useState(null);
+  const [actionMenuUp, setActionMenuUp] = useState(false);
 
   const mobileMenuRef = useRef(null);
 
@@ -50,7 +52,8 @@ export default function DashboardPage() {
   }, [router]);
 
   useEffect(() => {
-    if (status === "loading") return;
+    if (status === "loading" || status === "unauthenticated") return;
+    if (!session?.user?.token) return;
     fetchProducts(setProducts, session);
   }, [fetchProducts, session, status]);
 
@@ -77,12 +80,20 @@ export default function DashboardPage() {
     setModalOpen(true);
   }
 
-  function toggleActionMenu(id) {
-    setOpenActionId((prev) => (prev === id ? null : id));
+  function toggleActionMenu(id, e) {
+    if (openActionId === id) {
+      setOpenActionId(null);
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const menuHeight = 220;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    setActionMenuUp(spaceBelow < menuHeight);
+    setOpenActionId(id);
   }
 
-  function authHeaders() {
-    return { Authorization: `Bearer ${session?.user?.token}` };
+  function apiAuthHeaders() {
+    return authHeaders(session?.user?.token);
   }
 
   function openEditModal(product) {
@@ -97,9 +108,9 @@ export default function DashboardPage() {
     setEditLoading(true);
     try {
       const res = await axios.put(
-        "/api/products",
+        PRODUCTS_API,
         { id: editProduct.id, ...fields },
-        { headers: authHeaders() }
+        { headers: apiAuthHeaders() }
       );
       if (res?.data?.success) {
         setEditOpen(false);
@@ -125,9 +136,9 @@ export default function DashboardPage() {
     setDeleteLoadingId(product.id);
     setOpenActionId(null);
     try {
-      const res = await axios.delete("/api/products", {
+      const res = await axios.delete(PRODUCTS_API, {
         data: { id: product.id },
-        headers: authHeaders(),
+        headers: apiAuthHeaders(),
       });
       if (res?.data?.success) {
         fetchProducts(setProducts, session);
@@ -147,13 +158,13 @@ export default function DashboardPage() {
 
     try {
       const res = await axios.put(
-        "/api/products",
+        PRODUCTS_API,
         {
           id: selectedProduct.id,
           amount,
           type: modalType === "in" ? "add" : "remove",
         },
-        { headers: authHeaders() }
+        { headers: apiAuthHeaders() }
       );
 
       if (res?.data?.success) {
@@ -252,13 +263,13 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/5">
+        <div className="overflow-visible rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/5">
           <div className="border-b border-slate-100 px-5 py-4 sm:px-6">
             <h2 className="text-sm font-semibold text-slate-900">Products</h2>
             <p className="text-xs text-slate-500">{products.length} item{products.length !== 1 ? "s" : ""} in catalog</p>
           </div>
 
-          <div className="max-sm:overflow-hidden sm:overflow-x-auto">
+          <div className="overflow-visible sm:overflow-x-auto">
             <table className="w-full table-fixed text-left text-sm sm:table-auto">
               <colgroup className="sm:hidden">
                 <col className="w-[38%]" />
@@ -344,7 +355,7 @@ export default function DashboardPage() {
                         <button
                           type="button"
                           aria-label="Row actions"
-                          onClick={() => toggleActionMenu(p.id)}
+                          onClick={(e) => toggleActionMenu(p.id, e)}
                           className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
                         >
                           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -355,7 +366,11 @@ export default function DashboardPage() {
                         </button>
 
                         {openActionId === p.id && (
-                          <div className="action-menu-area absolute right-3 top-11 z-30 w-44 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-lg">
+                          <div
+                            className={`action-menu-area absolute right-0 z-50 w-44 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-lg ${
+                              actionMenuUp ? "bottom-full mb-1" : "top-full mt-1"
+                            }`}
+                          >
                             <button
                               type="button"
                               onClick={() => {
